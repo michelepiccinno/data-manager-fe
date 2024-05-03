@@ -30,7 +30,9 @@ export default {
 
 
 <template>
-
+  <!-- TABELLA TICKETS -->
+  <!-- Ogni ciclo stampa un data data-bs-target con id diverso associato a staticBackdrop. 
+    Quando data-bs-toggle viene attivato apre l'offcanvas con id corrispondente -->
   <tr @click="openCanvasTicket(id, object, lastActivity, priority, status)" data-bs-toggle="offcanvas"
     :data-bs-target="'#staticBackdrop-' + id">
     <th scope="row">
@@ -45,6 +47,8 @@ export default {
     <td>{{ status }}</td>
   </tr>
 
+  <!-- OFFCANVAS TICKET DETAIL -->
+  <!-- Ogni ciclo stampa id diverso associato a staticBackdrop.  -->
   <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" :id="'staticBackdrop-' + id"
     aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
