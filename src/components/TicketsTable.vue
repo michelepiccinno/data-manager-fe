@@ -3,7 +3,7 @@ import TicketDetail from './TicketDetail.vue';
 
 export default {
 
-  name: "TicketsTable",  
+  name: "TicketsTable",
 
   components: {
     TicketDetail
@@ -11,16 +11,34 @@ export default {
 
   data() {
     return {
-      books: [
+      rows: [
         {
-          id: '232',
-          titolo: 'il libro della giungla',
-          dimensione: '200 pagine',
+          id: '23122',
+          object: 'Riavvio sistema',
+          lastActivity: '2d 4h 15m',
+          priority: 'normale',
+          status: 'completo'
         },
         {
-          id: '173',
-          titolo: 'libro cuore',
-          dimensione: '350 pagine',
+          id: '98513',
+          object: 'Aggiornamento bloccato',
+          lastActivity: '8h 25m 16s',
+          priority: 'urgente',
+          status: 'in corso'
+        },
+        {
+          id: '75855',
+          object: 'Alert errore',
+          lastActivity: '5h 5m 25s',
+          priority: 'media',
+          status: 'preso in carico'
+        },
+        {
+          id: '87255',
+          object: 'Installazione bloccata',
+          lastActivity: '4h 9m 15s',
+          priority: 'bassa',
+          status: 'da assegnare'
         },
       ]
     }
@@ -35,11 +53,11 @@ export default {
 
 <template>
 
-  <TicketDetail 
+  <!--   <TicketDetail 
     v-for="book in books" 
     :title="book.titolo" 
     :dimension="book.dimensione" 
-    :key="book.id"/>
+    :key="book.id" /> -->
 
 
   <div class="container pt-5">
@@ -58,51 +76,20 @@ export default {
           </thead>
 
           <tbody>
-
-            <tr>
-              <th scope="row">56780</th>
-              <td>Riavvio sistema</td>
-              <td>2d 4h 15m</td>
-              <td>Normale</td>
-              <td><span class="bg-warning">In lavorazione</span></td>
-            </tr>
-
-            <tr>
-              <th scope="row">85462</th>
-              <td>Rallentamento</td>
-              <td>8h 25m 16s</td>
-              <td>Bassa</td>
-              <td><span class="bg-info-subtle">Da assegnare</span></td>
-            </tr>
-
-             <tr>
-              <th>
-                <router-link :to="{ name: 'ticket-detail' }" class="router-link"> 37862</router-link>
-              </th>
-              <td>
-                <router-link :to="{ name: 'ticket-detail' }" class="router-link">Alert errore</router-link>
-              </td>
-              <td>
-                <router-link :to="{ name: 'ticket-detail' }" class="router-link">8d 14h 3m</router-link>
-              </td>
-              <td>
-                <router-link :to="{ name: 'ticket-detail' }" class="router-link">Urgente</router-link>
-              </td>
-              <td>
-                <router-link :to="{ name: 'ticket-detail' }" class="router-link"> <span
-                    class="bg-success">Risolto</span></router-link>
-              </td>
-            </tr> 
-
+            <TicketDetail v-for="row in rows"
+            :id="row.id"
+            :object="row.object"
+            :lastActivity="row.lastActivity"
+            :priority="row.priority"
+            :status="row.status"
+            :key="row.id" />
           </tbody>
+
+
         </table>
       </div>
     </div>
   </div>
-
-
-
-
 
 </template>
 

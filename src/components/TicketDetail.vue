@@ -6,16 +6,25 @@ export default {
   name: "TicketDetail",
 
   props: {
-    title: String,
-    dimension: String,
+    id: String,
+    object: String,
+    lastActivity: String,
+    priority: String,
+    status: String,
+    key: String,
   }
 
 }
 </script>
 
 <template>
-  <div>
-    <h1>Titolo: {{ title }}</h1>
-    <h4>Dimensione: {{ dimension }}</h4>
-  </div>
+
+<tr>
+    <th scope="row">{{ id }}</th>
+    <td>{{ object }}</td>
+    <td>{{ lastActivity }}</td>
+    <td>{{ priority }}</td>
+    <td>{{ status }}</td>
+  </tr>
+
 </template>
