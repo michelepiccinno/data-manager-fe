@@ -7,7 +7,7 @@ export default {
 
   data() {
     return {
-      isCanvasOpen: false
+
     }
   },
 
@@ -32,7 +32,7 @@ export default {
 <template>
 
   <tr @click="openCanvasTicket(id, object, lastActivity, priority, status)" data-bs-toggle="offcanvas"
-    data-bs-target="#staticBackdrop">
+    :data-bs-target="'#staticBackdrop-' + id">
     <th scope="row">
       {{ id }}</th>
     <td>{{ object }}</td>
@@ -45,16 +45,20 @@ export default {
     <td>{{ status }}</td>
   </tr>
 
-  <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+  <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" :id="'staticBackdrop-' + id"
     aria-labelledby="staticBackdropLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
+      <h5 class="offcanvas-title" id="staticBackdropLabel">Dettaglio Ticket</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <div>
-        I will not close if you click outside of me.
-      </div>
+      <ul class="ticket-detail-canvas">
+        <li>Id: {{ id }}</li>
+        <li>Oggetto: {{ object }}</li>
+        <li>Ultima attività: {{ lastActivity }}</li>
+        <li>Priorità: <span class="badge text-dark" :class="'bg-color-' + priority">{{ priority }}</span></li>
+        <li>Stato: {{ status }}</li>
+      </ul>
     </div>
   </div>
 </template>
