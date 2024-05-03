@@ -24,7 +24,7 @@ export default {
           object: 'Aggiornamento bloccato',
           lastActivity: '8h 25m 16s',
           priority: 'high',
-          status: 'in corso'
+          status: 'in lavorazione'
         },
         {
           id: '75855',
