@@ -16,28 +16,28 @@ export default {
           id: '23122',
           object: 'Riavvio sistema',
           lastActivity: '2d 4h 15m',
-          priority: 'normale',
+          priority: 'normal',
           status: 'completo'
         },
         {
           id: '98513',
           object: 'Aggiornamento bloccato',
           lastActivity: '8h 25m 16s',
-          priority: 'urgente',
+          priority: 'high',
           status: 'in corso'
         },
         {
           id: '75855',
           object: 'Alert errore',
           lastActivity: '5h 5m 25s',
-          priority: 'media',
+          priority: 'medium',
           status: 'preso in carico'
         },
         {
           id: '87255',
           object: 'Installazione bloccata',
           lastActivity: '4h 9m 15s',
-          priority: 'bassa',
+          priority: 'low',
           status: 'da assegnare'
         },
       ]
@@ -93,23 +93,5 @@ export default {
 
 .table tbody {
   border-width: 2px;
-}
-
-.router-link {
-  text-decoration: none;
-  color: black;
-  width: 100%;
-  display: block
-}
-
-td {
-  border: 1px solid white;
-}
-
-span {
-  width: 100%;
-  display: block;
-  text-align: center;
-  padding: .2rem;
 }
 </style>
