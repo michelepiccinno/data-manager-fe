@@ -5,6 +5,18 @@ export default {
 
   name: "TicketDetail",
 
+  data() {
+    return {
+      isCanvasOpen: false
+    }
+  },
+
+  methods: {
+    openCanvasTicket(id, object, lastActivity, priority, status) {
+      console.log(id, object, lastActivity, priority, status);
+    }
+  },
+
   props: {
     id: String,
     object: String,
@@ -19,8 +31,10 @@ export default {
 
 <template>
 
-  <tr>
-    <th scope="row">{{ id }}</th>
+  <tr @click="openCanvasTicket(id, object, lastActivity, priority, status)" data-bs-toggle="offcanvas"
+    data-bs-target="#staticBackdrop">
+    <th scope="row">
+      {{ id }}</th>
     <td>{{ object }}</td>
     <td>{{ lastActivity }}</td>
     <td class="box-priority">
@@ -31,17 +45,28 @@ export default {
     <td>{{ status }}</td>
   </tr>
 
+  <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+    aria-labelledby="staticBackdropLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        I will not close if you click outside of me.
+      </div>
+    </div>
+  </div>
 </template>
 
 
 <style scoped>
-.td-priority {  
+.td-priority {
   width: 100%;
   padding: 2px;
   display: block;
   border-radius: 5px;
   text-align: center;
-  
 }
 
 .bg-color-low {
