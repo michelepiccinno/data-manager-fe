@@ -53,13 +53,6 @@ export default {
 
 <template>
 
-  <!--   <TicketDetail 
-    v-for="book in books" 
-    :title="book.titolo" 
-    :dimension="book.dimensione" 
-    :key="book.id" /> -->
-
-
   <div class="container pt-5">
     <div class="row">
       <div class="col">
