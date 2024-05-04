@@ -22,16 +22,17 @@ export default {
     }
   },
 
-  emits: ['formSubmitted'],
+  emits: ['formSubmitted'], 
 
   methods: {
     // EMIT -Passa dati aggiunti/modificati al genitore chiamando la funzione 'xxxxx'
-    ticketProcessing() {
+    ticketProcessing(idFormSaved) {
+      const id = idFormSaved.id;
       const description = this.$refs.descriptionField.value;
       const priority = this.$refs.priorityField.value;
       const status = this.$refs.statusField.value;
 
-      this.$emit('formSubmitted', { description, priority, status });
+      this.$emit('formSubmitted', { id, description, priority, status });
     }
   },
 
@@ -94,7 +95,7 @@ export default {
         <div id="collapseTwo" class="accordion-collapse collapse mt-2" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <!-- ACCORDION FORM DATA -->
-            <form @submit.prevent="ticketProcessing">
+            <form @submit.prevent="ticketProcessing({id})">
               <div class="form-floating mb-2">
                 <span>Descrizione lavorazione</span>
                 <textarea ref="descriptionField" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>

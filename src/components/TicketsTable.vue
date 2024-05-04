@@ -15,6 +15,7 @@ export default {
         {
           id: '23122',
           object: 'Riavvio sistema',
+          description: '',
           lastActivity: '2d 4h 15m',
           priority: 'normal',
           status: 'completo'
@@ -22,6 +23,7 @@ export default {
         {
           id: '98513',
           object: 'Aggiornamento bloccato',
+          description: '',
           lastActivity: '8h 25m 16s',
           priority: 'high',
           status: 'in lavorazione'
@@ -29,6 +31,7 @@ export default {
         {
           id: '75855',
           object: 'Alert errore',
+          description: '',
           lastActivity: '5h 5m 25s',
           priority: 'medium',
           status: 'preso in carico'
@@ -36,26 +39,30 @@ export default {
         {
           id: '87255',
           object: 'Installazione bloccata',
+          description: '',
           lastActivity: '4h 9m 15s',
           priority: 'low',
           status: 'da assegnare'
         },
       ],
 
-      /* parentDescription: '',
-      parentPriority: '',
-      parentStatus: '' */
     }
   },
 
   methods: {
-    //riceve i dati dal emit
+    //riceve i dati dal emit ed aggiorna i dati d'origine
     handleFormSubmitted(formData) {
       console.log('Dati del form ricevuti:', formData);
-      this.parentDescription = formData.description;
-      this.parentPriority = formData.priority;
-      this.parentStatus = formData.status; 
-      console.log(this.parentDescription);
+      const Id = formData.id;
+      const Description = formData.description;
+      const Priority = formData.priority;
+      const Status = formData.status; 
+      // recuperiamo l'indice dell'oggetto ticket da aggiornare
+      const indexTicket = this.rows.findIndex(x => x.id === Id);
+      // modifichiamo l'oggetto ticket 
+      const newObject = { description: Description, priority: Priority, status: Status }
+      Object.assign(this.rows[indexTicket], newObject);
+      console.log(this.rows);
     }
   }
 
