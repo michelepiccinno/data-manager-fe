@@ -22,9 +22,16 @@ export default {
     }
   },
 
+  emits: ['formSubmitted'],
+
   methods: {
-    openCanvasTicket(id, object, lastActivity, priority, status) {
-      console.log(id, object, lastActivity, priority, status);
+    // EMIT -Passa dati aggiunti/modificati al genitore chiamando la funzione 'xxxxx'
+    ticketProcessing() {
+      const description = this.$refs.descriptionField.value;
+      const priority = this.$refs.priorityField.value;
+      const status = this.$refs.statusField.value;
+
+      this.$emit('formSubmitted', { description, priority, status });
     }
   },
 
@@ -44,7 +51,7 @@ export default {
   <!-- TABELLA TICKETS -->
   <!-- Ogni ciclo stampa un data data-bs-target con id diverso associato a staticBackdrop. 
     Quando data-bs-toggle viene attivato apre l'offcanvas con id corrispondente -->
-  <tr @click="openCanvasTicket(id, object, lastActivity, priority, status)" data-bs-toggle="offcanvas"
+  <tr data-bs-toggle="offcanvas"
     :data-bs-target="'#staticBackdrop-' + id" class="cursor-pointer">
     <th scope="row">
       {{ id }}</th>
@@ -87,25 +94,25 @@ export default {
         <div id="collapseTwo" class="accordion-collapse collapse mt-2" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <!-- ACCORDION FORM DATA -->
-            <form>
+            <form @submit.prevent="ticketProcessing">
               <div class="form-floating mb-2">
                 <span>Descrizione lavorazione</span>
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea ref="descriptionField" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
               </div>
               <span>Priorità</span>
-              <select class="form-select mt-0 mb-2" aria-label="Default select example">
+              <select ref="priorityField" class="form-select mt-0 mb-2" aria-label="Default select example">
                 <option selected>{{ priority }}</option>
                 <template v-for="element in priorityList">
-                  <option v-if="element !== priority" value="element">
+                  <option v-if="element !== priority" :value="element">
                     {{ element }}
                   </option>
                 </template>
               </select>
               <span>Stato</span>
-              <select class="form-select mt-0" aria-label="Default select example">
+              <select ref="statusField" class="form-select mt-0" aria-label="Default select example">
                 <option selected>{{ status }}</option>
                 <template v-for="element in statusList">
-                  <option v-if="element !== status" value="element">
+                  <option v-if="element !== status" :value="element">
                     {{ element }}
                   </option>
                 </template>

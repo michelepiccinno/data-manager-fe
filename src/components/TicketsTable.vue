@@ -40,12 +40,23 @@ export default {
           priority: 'low',
           status: 'da assegnare'
         },
-      ]
+      ],
+
+      /* parentDescription: '',
+      parentPriority: '',
+      parentStatus: '' */
     }
   },
 
   methods: {
-
+    //riceve i dati dal emit
+    handleFormSubmitted(formData) {
+      console.log('Dati del form ricevuti:', formData);
+      this.parentDescription = formData.description;
+      this.parentPriority = formData.priority;
+      this.parentStatus = formData.status; 
+      console.log(this.parentDescription);
+    }
   }
 
 }
@@ -69,7 +80,8 @@ export default {
           </thead>
 
           <tbody>
-            <TicketDetail v-for="row in rows"
+            <!-- handleFormSubmitted è sempre in ascolto sul componente (in attesa di un emit)-->
+            <TicketDetail @formSubmitted="handleFormSubmitted" v-for="row in rows"
             :id="row.id"
             :object="row.object"
             :lastActivity="row.lastActivity"
@@ -77,7 +89,6 @@ export default {
             :status="row.status"
             :key="row.id" />
           </tbody>
-
 
         </table>
       </div>
