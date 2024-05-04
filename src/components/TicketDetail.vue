@@ -22,7 +22,7 @@ export default {
     }
   },
 
-  emits: ['formSubmitted'], 
+  emits: ['formSubmitted'],
 
   methods: {
     // EMIT -Passa dati aggiunti/modificati al genitore chiamando la funzione 'xxxxx'
@@ -31,9 +31,25 @@ export default {
       const description = this.$refs.descriptionField.value;
       const priority = this.$refs.priorityField.value;
       const status = this.$refs.statusField.value;
-
+      // trasmette le modifiche al componente genitore
       this.$emit('formSubmitted', { id, description, priority, status });
-    }
+
+      this.highlightRow(id);
+    },
+
+    //illumina la row quando salviamo la lavorazione del relativo ticket
+    highlightRow(id) {
+      // Seleziono la row dello specifico id ticket ricevuto
+      var tdToHighlight = document.getElementById('tr-' + id);
+      // Aggiungo la classe 'highlighted' al td selezionato per evidenziare la riga salvata (1 secondo)
+      tdToHighlight.classList.remove('returnnormal');
+      tdToHighlight.classList.add('highlighted');
+      // Rimuovo la classe 'highlighted' dopo un secondo
+      setTimeout(() => {
+        tdToHighlight.classList.add('returnnormal');
+        tdToHighlight.classList.remove('highlighted');
+      }, 1000);
+    },
   },
 
   props: {
@@ -52,8 +68,7 @@ export default {
   <!-- TABELLA TICKETS -->
   <!-- Ogni ciclo stampa un data data-bs-target con id diverso associato a staticBackdrop. 
     Quando data-bs-toggle viene attivato apre l'offcanvas con id corrispondente -->
-  <tr data-bs-toggle="offcanvas"
-    :data-bs-target="'#staticBackdrop-' + id" class="cursor-pointer">
+  <tr data-bs-toggle="offcanvas" :data-bs-target="'#staticBackdrop-' + id" class="cursor-pointer" :id="'tr-' + id">
     <th scope="row">
       {{ id }}</th>
     <td>{{ object }}</td>
@@ -95,10 +110,11 @@ export default {
         <div id="collapseTwo" class="accordion-collapse collapse mt-2" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <!-- ACCORDION FORM DATA -->
-            <form @submit.prevent="ticketProcessing({id})">
+            <form @submit.prevent="ticketProcessing({ id })">
               <div class="form-floating mb-2">
                 <span>Descrizione lavorazione</span>
-                <textarea ref="descriptionField" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea ref="descriptionField" class="form-control" placeholder="Leave a comment here"
+                  id="floatingTextarea"></textarea>
               </div>
               <span>Priorità</span>
               <select ref="priorityField" class="form-select mt-0 mb-2" aria-label="Default select example">
@@ -118,7 +134,7 @@ export default {
                   </option>
                 </template>
               </select>
-              <button type="submit" class="btn btn-primary mt-2">Salva</button>
+              <button type="submit" class="btn btn-primary mt-2" data-bs-dismiss="offcanvas">Salva</button>
             </form>
           </div>
         </div>
@@ -158,5 +174,15 @@ export default {
 
 .bg-color-high {
   background-color: rgb(255, 128, 119);
+}
+
+.highlighted {
+  opacity: 0;
+  transition: opacity .6s;
+}
+
+.returnnormal {
+  opacity: 1;
+  transition: opacity .6s;
 }
 </style>
