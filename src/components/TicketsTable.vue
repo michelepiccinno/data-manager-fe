@@ -1,4 +1,5 @@
 <script>
+import NewTicket from './NewTicket.vue';
 import TicketDetail from './TicketDetail.vue';
 
 export default {
@@ -6,7 +7,8 @@ export default {
   name: "TicketsTable",
 
   components: {
-    TicketDetail
+    TicketDetail,
+    NewTicket
   },
 
   data() {
@@ -51,18 +53,20 @@ export default {
 
   methods: {
     //riceve i dati dal emit ed aggiorna i dati d'origine
-    handleFormSubmitted(formData) {
-      console.log('Dati del form ricevuti:', formData);
-      const Id = formData.id;
-      const Description = formData.description;
-      const Priority = formData.priority;
-      const Status = formData.status; 
+    handleFormSubmitted(emitData) {
+      console.log('Dati del form ricevuti:', emitData);
+      const Id = emitData.id;
+      const Description = emitData.description;
+      const Priority = emitData.priority;
+      const Status = emitData.status; 
       // recuperiamo l'indice dell'oggetto ticket da aggiornare
       const indexTicket = this.rows.findIndex(x => x.id === Id);
       // modifichiamo l'oggetto ticket 
       const newObject = { description: Description, priority: Priority, status: Status }
       Object.assign(this.rows[indexTicket], newObject);
       console.log(this.rows);
+
+      this.$router.push({ name: 'ticketstable' });
     }
   }
 

@@ -1,5 +1,4 @@
 <script>
-import { stringifyQuery } from 'vue-router';
 
 export default {
 
@@ -26,39 +25,20 @@ export default {
 
   methods: {
     // EMIT -Passa dati aggiunti/modificati al genitore chiamando la funzione 'xxxxx'
-    addNewTicket() {
-      const id = idFormSaved.id;
+    ticketProcessing() {
+      const id = Math.floor(Math.random() * 90000) + 10000; //QUI DA GESTIRE L'UNIVOCITA' DELL'ID !!!
+      const object = this.$refs.objectField.value;
       const description = this.$refs.descriptionField.value;
       const priority = this.$refs.priorityField.value;
       const status = this.$refs.statusField.value;
+
       // trasmette le modifiche al componente genitore
       this.$emit('formSubmitted', { id, description, priority, status });
 
-      this.highlightRow(id);
+      console.log('ticket processing: ' + id, description, priority, status);
     },
 
-    //illumina la row quando salviamo la lavorazione del relativo ticket
-    highlightRow(id) {
-      // Seleziono la row dello specifico id ticket ricevuto
-      var tdToHighlight = document.getElementById('tr-' + id);
-      // Aggiungo la classe 'highlighted' al td selezionato per evidenziare la riga salvata (1 secondo)
-      tdToHighlight.classList.remove('returnnormal');
-      tdToHighlight.classList.add('highlighted');
-      // Rimuovo la classe 'highlighted' dopo un secondo
-      setTimeout(() => {
-        tdToHighlight.classList.add('returnnormal');
-        tdToHighlight.classList.remove('highlighted');
-      }, 1000);
-    },
   },
-
-  props: {
-    id: String,
-    object: String,
-    lastActivity: String,
-    priority: String,
-    status: String,
-  }
 
 }
 </script>
@@ -70,7 +50,7 @@ export default {
   <div class="container pt-5">
     <div class="row">
       <div class="col">
-        <form @submit.prevent="addNewTicket()">
+        <form @submit.prevent="ticketProcessing()">
           <div class="form-floatingmb-2">
             <span class="d-block">Oggetto</span>
             <input ref="objectField" class="form-control" type="text">
@@ -82,7 +62,6 @@ export default {
           </div>
           <span>Priorità</span>
           <select ref="priorityField" class="form-select mt-0 mb-2" aria-label="Default select example">
-            <option selected>{{ priority }}</option>
             <template v-for="element in priorityList">
               <option selected :value="element">
                 {{ element }}
@@ -91,19 +70,17 @@ export default {
           </select>
           <span>Stato</span>
           <select ref="statusField" class="form-select mt-0" aria-label="Default select example">
-            <option selected>{{ status }}</option>
             <template v-for="element in statusList">
               <option selected :value="element">
                 {{ element }}
               </option>
             </template>
           </select>
-          <button type="submit" class="btn btn-primary mt-2" data-bs-dismiss="offcanvas">Salva</button>
+          <button type="submit" class="btn btn-primary mt-2">Salva</button>
         </form>
       </div>
     </div>
   </div>
-
 
 </template>
 
