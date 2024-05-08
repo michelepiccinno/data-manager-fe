@@ -1,5 +1,6 @@
 <script>
 import { stringifyQuery } from 'vue-router';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 
@@ -22,37 +23,40 @@ export default {
     }
   },
 
-  emits: ['formSubmitted'],
+
 
   methods: {
-    // EMIT -Passa dati aggiunti/modificati al genitore chiamando la funzione 'xxxxx'
-    ticketProcessing(idFormSaved) {
-      console.log('idformsaved: ' + idFormSaved.id);
-      const id = idFormSaved.id;
-      const description = this.$refs.descriptionField.value;
-      const priority = this.$refs.priorityField.value;
-      const status = this.$refs.statusField.value;
-      // trasmette le modifiche al componente genitore
-      this.$emit('formSubmitted', { id, description, priority, status });
-      console.log('ticket processing: ' + id, description, priority, status);
-      
-      this.highlightRow(id);
-    },
+    //importa le azioni definite nello store Vuex all'interno del componente Vue, 
+    //consentendo di chiamarle direttamente all'interno del componente senza dover 
+    //fare riferimento esplicito a this.$store.dispatch('storeData').
+    ...mapActions(['storeData']),
 
-    //illumina la row quando salviamo la lavorazione del relativo ticket
-    highlightRow(id) {
-      // Seleziono la row dello specifico id ticket ricevuto
-      var tdToHighlight = document.getElementById('tr-' + id);
-      // Aggiungo la classe 'highlighted' al td selezionato per evidenziare la riga salvata (1 secondo)
-      tdToHighlight.classList.remove('returnnormal');
-      tdToHighlight.classList.add('highlighted');
-      // Rimuovo la classe 'highlighted' dopo un secondo
-      setTimeout(() => {
-        tdToHighlight.classList.add('returnnormal');
-        tdToHighlight.classList.remove('highlighted');
-      }, 1000);
-    },
+    storeTicketData() {
+      const id = '4234342'; //prova con dati fissi
+      const description = 'la mia descrizione';
+
+      // chiamo storeData di vuex e passo i dati del form come parametro
+      this.storeData({ id, description });
+
+    }
   },
+
+
+
+  //illumina la row quando salviamo la lavorazione del relativo ticket
+  highlightRow(id) {
+    // Seleziono la row dello specifico id ticket ricevuto
+    var tdToHighlight = document.getElementById('tr-' + id);
+    // Aggiungo la classe 'highlighted' al td selezionato per evidenziare la riga salvata (1 secondo)
+    tdToHighlight.classList.remove('returnnormal');
+    tdToHighlight.classList.add('highlighted');
+    // Rimuovo la classe 'highlighted' dopo un secondo
+    setTimeout(() => {
+      tdToHighlight.classList.add('returnnormal');
+      tdToHighlight.classList.remove('highlighted');
+    }, 1000);
+  },
+
 
   props: {
     id: String,
@@ -112,7 +116,7 @@ export default {
         <div id="collapseTwo" class="accordion-collapse collapse mt-2" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <!-- ACCORDION FORM DATA -->
-            <form @submit.prevent="ticketProcessing({ id })">
+            <form @submit.prevent="storeTicketData">
               <div class="form-floating mb-2">
                 <span>Descrizione lavorazione</span>
                 <textarea ref="descriptionField" class="form-control" placeholder="Leave a comment here"

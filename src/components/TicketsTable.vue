@@ -92,7 +92,7 @@ export default {
 
           <tbody>
             <!-- handleFormSubmitted è sempre in ascolto sul componente (in attesa di un emit)-->
-            <TicketDetail @formSubmitted="handleFormSubmitted" v-for="row in rows"
+            <TicketDetail v-for="row in rows"
             :id="row.id"
             :object="row.object"
             :lastActivity="row.lastActivity"
