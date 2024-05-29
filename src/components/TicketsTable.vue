@@ -13,64 +13,18 @@ export default {
 
   data() {
     return {
-      rows: [
-        {
-          id: '23122',
-          object: 'Riavvio sistema',
-          description: '',
-          lastActivity: '2d 4h 15m',
-          priority: 'normal',
-          status: 'completo'
-        },
-        {
-          id: '98513',
-          object: 'Aggiornamento bloccato',
-          description: '',
-          lastActivity: '8h 25m 16s',
-          priority: 'high',
-          status: 'in lavorazione'
-        },
-        {
-          id: '75855',
-          object: 'Alert errore',
-          description: '',
-          lastActivity: '5h 5m 25s',
-          priority: 'medium',
-          status: 'preso in carico'
-        },
-        {
-          id: '87255',
-          object: 'Installazione bloccata',
-          description: '',
-          lastActivity: '4h 9m 15s',
-          priority: 'low',
-          status: 'da assegnare'
-        },
-      ],
-
+      //Vuex "inietta" lo store in tutti i componenti figlio dal componente root 
+      //tramite il sistema di plugin di Vue e sarà disponibile su di essi come file this.$store
+      rows: this.$store.state.rows
     }
   },
 
   methods: {
-    //riceve i dati dal emit ed aggiorna i dati d'origine
-    handleFormSubmitted(emitData) {
-      console.log('Dati del form ricevuti:', emitData);
-      const Id = emitData.id;
-      const Description = emitData.description;
-      const Priority = emitData.priority;
-      const Status = emitData.status; 
-      // recuperiamo l'indice dell'oggetto ticket da aggiornare
-      const indexTicket = this.rows.findIndex(x => x.id === Id);
-      // modifichiamo l'oggetto ticket 
-      const newObject = { description: Description, priority: Priority, status: Status }
-      Object.assign(this.rows[indexTicket], newObject);
-      console.log(this.rows);
-
-      this.$router.push({ name: 'ticketstable' });
-    }
+  
+    } 
   }
 
-}
+
 </script>
 
 <template>

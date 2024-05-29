@@ -19,25 +19,22 @@ export default {
         'preso in carico',
         'in lavorazione',
         'completo'
-      ]
+      ],
+      formData: {
+        //this.xxx si riferisce alle props
+        id: this.id,
+        description: this.description,
+        priority: this.priority,
+        status: this.status,
+      }
     }
   },
 
-
-
   methods: {
-    //importa le azioni definite nello store Vuex all'interno del componente Vue, 
-    //consentendo di chiamarle direttamente all'interno del componente senza dover 
-    //fare riferimento esplicito a this.$store.dispatch('storeData').
-    ...mapActions(['storeData']),
-
-    storeTicketData() {
-      const id = '4234342'; //prova con dati fissi
-      const description = 'la mia descrizione';
-
-      // chiamo storeData di vuex e passo i dati del form come parametro
-      this.storeData({ id, description });
-
+    editTicket() {
+      //recupero i dati del form
+      //e li invio alla action storeData
+      this.$store.dispatch('storeData', this.formData)
     }
   },
 
@@ -116,14 +113,14 @@ export default {
         <div id="collapseTwo" class="accordion-collapse collapse mt-2" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <!-- ACCORDION FORM DATA -->
-            <form @submit.prevent="storeTicketData">
+            <form @submit.prevent="editTicket">
               <div class="form-floating mb-2">
                 <span>Descrizione lavorazione</span>
-                <textarea ref="descriptionField" class="form-control" placeholder="Leave a comment here"
+                <textarea v-model="formData.description" class="form-control" placeholder="Leave a comment here"
                   id="floatingTextarea"></textarea>
               </div>
               <span>Priorità</span>
-              <select ref="priorityField" class="form-select mt-0 mb-2" aria-label="Default select example">
+              <select v-model="formData.priority" class="form-select mt-0 mb-2" aria-label="Default select example">
                 <option selected>{{ priority }}</option>
                 <template v-for="element in priorityList">
                   <option v-if="element !== priority" :value="element">
@@ -132,7 +129,7 @@ export default {
                 </template>
               </select>
               <span>Stato</span>
-              <select ref="statusField" class="form-select mt-0" aria-label="Default select example">
+              <select v-model="formData.status" class="form-select mt-0" aria-label="Default select example">
                 <option selected>{{ status }}</option>
                 <template v-for="element in statusList">
                   <option v-if="element !== status" :value="element">

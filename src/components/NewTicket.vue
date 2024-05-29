@@ -21,23 +21,10 @@ export default {
     }
   },
 
-  emits: ['formSubmitted'],
+
 
   methods: {
-    // EMIT -Passa dati aggiunti/modificati al genitore chiamando la funzione 'xxxxx'
-    ticketProcessing() {
-      const id = Math.floor(Math.random() * 90000) + 10000; //QUI DA GESTIRE L'UNIVOCITA' DELL'ID !!!
-      const object = this.$refs.objectField.value;
-      const description = this.$refs.descriptionField.value;
-      const priority = this.$refs.priorityField.value;
-      const status = this.$refs.statusField.value;
-
-      // trasmette le modifiche al componente genitore
-      this.$emit('formSubmitted', { id, description, priority, status });
-
-      console.log('ticket processing: ' + id, description, priority, status);
-    },
-
+  
   },
 
 }
