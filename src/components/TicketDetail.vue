@@ -8,18 +8,6 @@ export default {
 
   data() {
     return {
-      priorityList: [
-        'low',
-        'normal',
-        'medium',
-        'high'
-      ],
-      statusList: [
-        'da assegnare',
-        'preso in carico',
-        'in lavorazione',
-        'completo'
-      ],
       formData: {
         //this.xxx si riferisce alle props
         id: this.id,
@@ -122,7 +110,7 @@ export default {
               <span>Priorità</span>
               <select v-model="formData.priority" class="form-select mt-0 mb-2" aria-label="Default select example">
                 <option selected>{{ priority }}</option>
-                <template v-for="element in priorityList">
+                <template v-for="element in this.$store.state.priorityList">
                   <option v-if="element !== priority" :value="element">
                     {{ element }}
                   </option>
@@ -131,7 +119,7 @@ export default {
               <span>Stato</span>
               <select v-model="formData.status" class="form-select mt-0" aria-label="Default select example">
                 <option selected>{{ status }}</option>
-                <template v-for="element in statusList">
+                <template v-for="element in this.$store.state.statusList">
                   <option v-if="element !== status" :value="element">
                     {{ element }}
                   </option>

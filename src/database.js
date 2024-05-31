@@ -35,4 +35,16 @@ export default database({
       status: 'da assegnare'
     },
   ],
+  priorityList: [
+    'low',
+    'normal',
+    'medium',
+    'high'
+  ],
+  statusList: [
+    'da assegnare',
+    'preso in carico',
+    'in lavorazione',
+    'completo'
+  ],
 })
