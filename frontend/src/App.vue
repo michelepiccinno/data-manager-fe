@@ -18,6 +18,7 @@
       axios
         .get('http://127.0.0.1:8000/api/welcome')
         .then(response => (this.info = response))
+        .catch(errore => { console.error(errore) })
     }
   }
 </script>
