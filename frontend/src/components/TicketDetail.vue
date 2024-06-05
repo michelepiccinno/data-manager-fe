@@ -22,12 +22,10 @@ export default {
     editTicket() {
       //recupero i dati del form
       //e li invio alla action storeData
-      this.$store.dispatch('storeData', this.formData)
-    }
-  },
-
-
-
+      this.$store.dispatch('storeData', this.formData);
+      this.highlightRow(this.formData.id)
+    },
+  
   //illumina la row quando salviamo la lavorazione del relativo ticket
   highlightRow(id) {
     // Seleziono la row dello specifico id ticket ricevuto
@@ -40,8 +38,8 @@ export default {
       tdToHighlight.classList.add('returnnormal');
       tdToHighlight.classList.remove('highlighted');
     }, 1000);
+  }
   },
-
 
   props: {
     id: String,
