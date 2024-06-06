@@ -40,29 +40,14 @@ export default {
         priority: '',
         status: ''
       };
-
       let isValid = true;
-
-      if (!this.formData.object) {
-        this.errors.object = 'Questo campo è obbligatorio';
-        isValid = false;
-      }
-
-      if (!this.formData.description) {
-        this.errors.description = 'Questo campo è obbligatorio';
-        isValid = false;
-      }
-
-      if (!this.formData.priority) {
-        this.errors.priority = 'Questo campo è obbligatorio';
-        isValid = false;
-      }
-
-      if (!this.formData.status) {
-        this.errors.status = 'Questo campo è obbligatorio';
-        isValid = false;
-      }
-
+      let fields = ['object', 'description', 'priority', 'status'];
+      fields.forEach(element => {
+        if (!this.formData[element]) {
+          this.errors[element] = 'Questo campo è obbligatorio';
+          isValid = false;
+        }
+      });
       return isValid;
     },
   }
