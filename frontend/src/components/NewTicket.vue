@@ -7,18 +7,17 @@ export default {
   data() {
     return {
       formData: {
-        //this.xxx si riferisce alle props
-        object: this.object,
-        description: this.description,
-        priority: this.priority,
-        status: this.status,
+        object: '',
+        description: '',
+        priority: '',
+        status: ''
       },
       errors: {
         object: '',
         description: '',
         priority: '',
         status: ''
-      }
+      },
     }
   },
 
@@ -28,29 +27,26 @@ export default {
         //recupero i dati del form
         //e li invio alla action storeData
         this.$store.dispatch('storeData', this.formData);
-
         this.$router.push('/')
       }
     },
 
     validateForm() {
-      this.errors = {
-        object: '',
-        description: '',
-        priority: '',
-        status: ''
-      };
-      let isValid = true;
       let fields = ['object', 'description', 'priority', 'status'];
       fields.forEach(element => {
-        if (!this.formData[element]) {
-          this.errors[element] = 'Questo campo è obbligatorio';
-          isValid = false;
-        }
+        ((!this.formData[element]) ? this.errors[element] = 'Questo campo è obbligatorio' : this.errors[element] = '');
       });
-      return isValid;
     },
-  }
+  },
+
+  computed: {
+    bindModal() {
+      // (serve per attivare la modale premendo "salva")
+      // controllo se ogni campo di formData ha un valore true. Solo se tutti i campi sono valorizzati ho un return true
+      return ['object', 'description', 'priority', 'status'].every(field => this.formData[field]);
+    }
+  },
+
 }
 </script>
 
@@ -62,16 +58,16 @@ export default {
     <div class="row">
       <div class="col">
         <form @submit.prevent="saveTicket()" action="/">
-
+          <span class="d-flex justify-content-end">*campi obbligatori</span>
           <div class="form-floatingmb-2">
-            <span class="d-block">Oggetto</span>
+            <span class="d-block">*Oggetto</span>
             <input name="object" type="text" v-model="formData.object" ref="objectField" class="form-control"
               :class="{ 'is-invalid': errors.object }" />
             <div class="text-danger" v-if="errors.object">{{ errors.object }}</div>
           </div>
 
           <div class="form-floating mb-2">
-            <span>Descrizione problema</span>
+            <span>*Descrizione problema</span>
             <textarea name="description" type="text" v-model="formData.description" ref="descriptionField"
               class="form-control" :class="{ 'is-invalid': errors.description }" placeholder="Leave a comment here"
               id="floatingTextarea"></textarea>
@@ -79,7 +75,7 @@ export default {
           </div>
 
           <div class="mb-2">
-            <span>Priorità</span>
+            <span>*Priorità</span>
             <select v-model="formData.priority" ref="priorityField" class="form-select mt-0 mb-2"
               :class="{ 'is-invalid': errors.priority }" aria-label="Default select example">
               <template v-for="element in this.$store.state.priorityList">
@@ -92,7 +88,7 @@ export default {
           </div>
 
           <div class="mb-2">
-            <span>Stato</span>
+            <span>*Stato</span>
             <select v-model="formData.status" ref="statusField" class="form-select mt-0"
               :class="{ 'is-invalid': errors.status }" aria-label="Default select example">
               <template v-for="element in this.$store.state.statusList">
@@ -106,7 +102,7 @@ export default {
 
           <!-- Button trigger modal -->
 
-          <button type="submit" class="btn btn-primary mt-2" data-bs-toggle="modal"
+          <button type="submit" class="btn btn-primary mt-2" :data-bs-toggle="bindModal ? 'modal' : ''"
             data-bs-target="#staticBackdrop">Salva</button>
 
           <!-- Modal -->
