@@ -1,4 +1,6 @@
 <script>
+import { isVNode } from 'vue';
+
 
 export default {
 
@@ -32,16 +34,18 @@ export default {
     },
 
     validateForm() {
+      let isValid = true;
       let fields = ['object', 'description', 'priority', 'status'];
       fields.forEach(element => {
-        ((!this.formData[element]) ? this.errors[element] = 'Questo campo è obbligatorio' : this.errors[element] = '');
+        ((!this.formData[element]) ? (this.errors[element] = ('Questo campo è obbligatorio')) && (isValid = false) : (this.errors[element] = ''));
       });
+      return isValid;
     },
   },
 
   computed: {
     bindModal() {
-      // (serve per attivare la modale premendo "salva")
+      // (attiva la modale reattivamente se i campi del form sono non vuoti)
       // controllo se ogni campo di formData ha un valore true. Solo se tutti i campi sono valorizzati ho un return true
       return ['object', 'description', 'priority', 'status'].every(field => this.formData[field]);
     }
@@ -57,7 +61,7 @@ export default {
   <div class="container pt-5">
     <div class="row">
       <div class="col">
-        <form @submit.prevent="saveTicket()" action="/">
+        <form @submit.prevent="saveTicket()">
           <span class="d-flex justify-content-end">*campi obbligatori</span>
           <div class="form-floatingmb-2">
             <span class="d-block">*Oggetto</span>
@@ -97,7 +101,7 @@ export default {
                 </option>
               </template>
             </select>
-            <div class="text-danger" v-if="errors.priority">{{ errors.status }}</div>
+            <div class="text-danger" v-if="errors.status">{{ errors.status }}</div>
           </div>
 
           <!-- Button trigger modal -->
