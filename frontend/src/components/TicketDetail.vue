@@ -25,24 +25,25 @@ export default {
       this.$store.dispatch('storeData', this.formData);
       this.highlightRow(this.formData.id)
     },
-  
-  //illumina la row quando salviamo la lavorazione del relativo ticket
-  highlightRow(id) {
-    // Seleziono la row dello specifico id ticket ricevuto
-    var tdToHighlight = document.getElementById('tr-' + id);
-    // Aggiungo la classe 'highlighted' al td selezionato per evidenziare la riga salvata (1 secondo)
-    tdToHighlight.classList.remove('returnnormal');
-    tdToHighlight.classList.add('highlighted');
-    // Rimuovo la classe 'highlighted' dopo un secondo
-    setTimeout(() => {
-      tdToHighlight.classList.add('returnnormal');
-      tdToHighlight.classList.remove('highlighted');
-    }, 1000);
-  }
+
+    //illumina la row quando salviamo la lavorazione del relativo ticket
+    highlightRow(id) {
+      // Seleziono la row dello specifico id ticket ricevuto
+      var tdToHighlight = document.getElementById('tr-' + id);
+      // Aggiungo la classe 'highlighted' al td selezionato per evidenziare la riga salvata (1 secondo)
+      tdToHighlight.classList.remove('returnnormal');
+      tdToHighlight.classList.add('highlighted');
+      // Rimuovo la classe 'highlighted' dopo un secondo
+      setTimeout(() => {
+        tdToHighlight.classList.add('returnnormal');
+        tdToHighlight.classList.remove('highlighted');
+      }, 1000);
+    }
+    
   },
 
   props: {
-    id: String,
+    id: Number,
     object: String,
     lastActivity: String,
     priority: String,

@@ -1,4 +1,5 @@
 <script>
+import { computed } from 'vue';
 import NewTicket from './NewTicket.vue';
 import TicketDetail from './TicketDetail.vue';
 
@@ -11,19 +12,18 @@ export default {
     NewTicket
   },
 
-  data() {
-    return {
-      //Vuex "inietta" lo store in tutti i componenti figlio dal componente root 
-      //tramite il sistema di plugin di Vue e sarà disponibile su di essi come file this.$store
-      rows: this.$store.state.rows
+  computed: {
+    formattedRows() {
+      //funzione che formatta e calcola (in base alla data di apertura/modifica) l'ultima attività sui ticket (la funzione viene utilizzata esclusivamente per la vista e non tocca il DB)
+      return this.$store.state.rows.map(row => {
+        let newValue = row.lastActivity.replace(/[^0-9]/g, '');
+        return { ...row, lastActivity: newValue };
+      })
+
     }
   },
 
-  methods: {
-  
-    } 
-  }
-
+}
 
 </script>
 
@@ -46,13 +46,8 @@ export default {
 
           <tbody>
             <!-- handleFormSubmitted è sempre in ascolto sul componente (in attesa di un emit)-->
-            <TicketDetail v-for="row in rows"
-            :id="row.id"
-            :object="row.object"
-            :lastActivity="row.lastActivity"
-            :priority="row.priority"
-            :status="row.status"
-            :key="row.id" />
+            <TicketDetail v-for="row in formattedRows" :id="row.id" :object="row.object"
+              :lastActivity="row.lastActivity" :priority="row.priority" :status="row.status" :key="row.id" />
           </tbody>
 
         </table>

@@ -7,6 +7,7 @@ export default createStore({
   state: {
     ticketData: null,
     rows: database.tickets,
+    lastActivity: database.lastActivity,
     priorityList: database.priorityList,
     statusList: database.statusList,
   },
@@ -15,25 +16,23 @@ export default createStore({
   actions: {
     storeData({ commit }, payload) {
       commit('saveTicketData', payload);
-      /*console.log(payload); */
     }
   },
 
   mutations: {
     saveTicketData(state, payload) {
-      /*console.log(payload.id); */
-      /*console.log(state.rows);  */
+
+      //assegno data ultima modifica
+      payload.lastActivity = new Date().toLocaleString("en-GB");
 
       //aggiungo/modifico l'oggetto 
-      if (payload.id === null || payload.id === undefined) {
-        payload.id = '99999';
-        payload.lastActivity = '2d 3h 5m';
+      if (!payload.id) {
+        payload.id = Math.floor(Math.random() * 90000) + 10000;
         state.rows.unshift(payload);
       } else {
         const index = state.rows.findIndex(obj => obj.id === payload.id)
         state.rows[index] = { ...state.rows[index], ...payload }
       }
-
       console.log('payload_id: ' + payload.id);
       console.log(state.rows);
     }

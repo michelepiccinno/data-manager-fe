@@ -5,10 +5,11 @@ import { isVNode } from 'vue';
 export default {
 
   name: "NewTicket",
-
+  
   data() {
     return {
       formData: {
+        id: null,
         object: '',
         description: '',
         priority: '',
