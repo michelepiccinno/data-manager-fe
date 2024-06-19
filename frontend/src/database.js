@@ -6,7 +6,7 @@ export default database({
       id: 23122,
       object: 'Riavvio sistema',
       description: '',
-      lastActivity: '14/06/2024, 15:14:13',
+      lastActivity: '2024-06-18T20:16:20',
       priority: 'normal',
       status: 'completo'
     },
@@ -14,7 +14,7 @@ export default database({
       id: 98513,
       object: 'Aggiornamento bloccato',
       description: '',
-      lastActivity: '10/06/2024, 08:14:13',
+      lastActivity: '2024-06-11T20:11:32',
       priority: 'high',
       status: 'in lavorazione'
     },
@@ -22,7 +22,7 @@ export default database({
       id: 75855,
       object: 'Alert errore',
       description: '',
-      lastActivity: '4/05/2024, 10:14:13',
+      lastActivity: '2024-05-01T20:03:50',
       priority: 'medium',
       status: 'preso in carico'
     },
@@ -30,7 +30,7 @@ export default database({
       id: 87255,
       object: 'Installazione bloccata',
       description: '',
-      lastActivity: '14/06/2024, 05:14:13',
+      lastActivity: '2024-06-15T20:16:53',
       priority: 'low',
       status: 'da assegnare'
     },

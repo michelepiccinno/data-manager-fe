@@ -39,7 +39,6 @@ export default {
         tdToHighlight.classList.remove('highlighted');
       }, 1000);
     }
-    
   },
 
   props: {

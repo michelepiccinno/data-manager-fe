@@ -23,7 +23,7 @@ export default createStore({
     saveTicketData(state, payload) {
 
       //assegno data ultima modifica
-      payload.lastActivity = new Date().toLocaleString("en-GB");
+      payload.lastActivity = new Date();
 
       //aggiungo/modifico l'oggetto 
       if (!payload.id) {
@@ -33,8 +33,6 @@ export default createStore({
         const index = state.rows.findIndex(obj => obj.id === payload.id)
         state.rows[index] = { ...state.rows[index], ...payload }
       }
-      console.log('payload_id: ' + payload.id);
-      console.log(state.rows);
     }
   },
 })

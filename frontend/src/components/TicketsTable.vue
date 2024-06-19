@@ -13,18 +13,49 @@ export default {
   },
 
   computed: {
-    formattedRows() {
-      //funzione che formatta e calcola (in base alla data di apertura/modifica) l'ultima attività sui ticket (la funzione viene utilizzata esclusivamente per la vista e non tocca il DB)
-      return this.$store.state.rows.map(row => {
-        let newValue = row.lastActivity.replace(/[^0-9]/g, '');
-        return { ...row, lastActivity: newValue };
-      })
 
+    //funzione che e calcola (in base alla data di apertura/modifica) l'ultima attività sui ticket
+    calcLastActivity() {
+
+      return this.$store.state.rows.map(row => {
+
+        //leggo la data di ogni singolo ticket
+        let dataInizio = new Date(row.lastActivity);
+        //leggo la data attuale
+        let dataAttuale = new Date();
+    
+        // Calcolo la differenza in millisecondi tra dataAttuale e dataInizio
+        let differenza = dataAttuale.getTime() - dataInizio.getTime();
+
+        // Calcolo le unità di tempo
+        let secondi = Math.floor(differenza / 1000);
+        let minuti = Math.floor(secondi / 60);
+        let ore = Math.floor(minuti / 60);
+        let giorni = Math.floor(ore / 24);
+        let settimane = Math.floor(giorni / 7);
+
+        // Calcolo i resti per ottenere secondi, minuti, ore e giorni
+        secondi %= 60;
+        minuti %= 60;
+        ore %= 24;
+        giorni %= 7;
+
+        // Formatto l'output
+        let tempoTrascorso = "";
+        if (settimane >= 1) {
+          tempoTrascorso = `${settimane}w ${giorni}d ${ore}h`;
+        } else if (giorni >= 1) {
+          tempoTrascorso = `${giorni}d ${ore}h ${minuti}m`;
+        } else {
+          tempoTrascorso = `${ore}h ${minuti}m ${secondi}s`;
+        }
+
+        //aggiorno ogni ticket con tempotrascorso
+        return { ...row, lastActivity: tempoTrascorso };
+      })
     }
   },
-
 }
-
 </script>
 
 <template>
@@ -46,7 +77,7 @@ export default {
 
           <tbody>
             <!-- handleFormSubmitted è sempre in ascolto sul componente (in attesa di un emit)-->
-            <TicketDetail v-for="row in formattedRows" :id="row.id" :object="row.object"
+            <TicketDetail v-for="row in calcLastActivity" :id="row.id" :object="row.object"
               :lastActivity="row.lastActivity" :priority="row.priority" :status="row.status" :key="row.id" />
           </tbody>
 
